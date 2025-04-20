@@ -49,9 +49,19 @@ pipeline {
     post {
         success {
             echo 'Build, Docker image creation, and push to Docker Hub succeeded!'
+			emailext (
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Good news!\n\nThe build was successful.\n\nJenkins Build: ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+            )
         }
         failure {
             echo 'Something went wrong.'
+			emailext (
+                subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Oops!\n\nThe build has failed.\n\nJenkins Build: ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+            )
         }
     }
 }
