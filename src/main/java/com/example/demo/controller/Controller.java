@@ -11,4 +11,9 @@ public class Controller {
 		System.out.println("Hello World");
 	}
 	
+	@GetMapping("/getData")
+	public void getData() {
+		System.out.println("Hello World");
+	}
+	
 }
